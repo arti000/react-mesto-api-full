@@ -1,0 +1,17 @@
+.header__icon-menu_open {
+  width: 26px;
+  height: 26px;
+  background: transparent center url("../../../../images/close-button.svg");
+  background-size: auto;
+  border: none;
+  position: absolute;
+  margin: 0;
+  top: 174px;
+  right: 26px;
+  transition: 0s;
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+  -ms-transition: 0s;
+  -o-transition: 0s;
+  transform: rotate(45deg);
+}

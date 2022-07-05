@@ -1,0 +1,12 @@
+.header__menu {
+  display: none;
+  background-color: #000;
+  width: 100%;
+}
+
+@media screen and (min-width: 914px) {
+  .header__menu {
+    display: flex;
+    width: auto;
+  }
+}

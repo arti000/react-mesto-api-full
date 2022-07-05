@@ -1,0 +1,8 @@
+@media screen and (min-width: 914px) {
+  .profile__content {
+    width: 730px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

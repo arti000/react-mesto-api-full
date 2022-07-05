@@ -1,0 +1,18 @@
+.header__menu_open {
+  display: flex;
+
+  flex-direction: column;
+  padding: 10px 0 40px;
+  border-bottom: 1px solid rgba(54, 54, 54, 0.7);
+  margin-bottom: 30px;
+}
+
+/* Защита от "дурака", чтобы если при открытом меню изменить размер дисплея, все было норм */
+@media screen and (min-width: 914px) {
+  .header__menu_open {
+    flex-direction: row;
+    padding: 0;
+    border: 0;
+    margin: 0;
+  }
+}

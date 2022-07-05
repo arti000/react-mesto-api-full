@@ -1,0 +1,9 @@
+.auth__section:last-of-type {
+  margin-bottom: 173px;
+}
+
+@media screen and (min-width: 914px) {
+  .auth__section:last-of-type {
+    margin-bottom: 216px;
+  }
+}

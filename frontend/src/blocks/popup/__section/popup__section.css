@@ -1,0 +1,14 @@
+.popup__section {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.popup__section:last-of-type {
+  margin-bottom: 45px;
+}
+
+@media screen and (min-width: 914px) {
+  .popup__section:last-of-type {
+    margin-bottom: 48px;
+  }
+}

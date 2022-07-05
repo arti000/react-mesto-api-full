@@ -1,0 +1,13 @@
+.popup__icon {
+  width: 120px;
+  height: 120px;
+  align-self: center;
+  margin-bottom: 40px;
+}
+
+@media screen and (min-width: 914px) {
+  .popup__icon {
+    margin-top: 24px;
+    margin-bottom: 32px;
+  }
+}

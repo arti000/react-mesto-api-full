@@ -1,0 +1,13 @@
+.auth {
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+@media screen and (min-width: 914px) {
+  .auth {
+    padding-top: 60px;
+  }
+}

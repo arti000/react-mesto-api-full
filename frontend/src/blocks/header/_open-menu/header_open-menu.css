@@ -1,0 +1,12 @@
+.header_open-menu {
+  flex-direction: column-reverse;
+  align-items: flex-start;
+}
+
+@media screen and (min-width: 914px) {
+  .header_open-menu {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
