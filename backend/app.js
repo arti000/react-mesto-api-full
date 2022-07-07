@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
+
 const { createUser, login } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
@@ -19,6 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true,
 }));
+
+app.use(cors());
 
 // Подключаем логгер запросов
 app.use(requestLogger);
