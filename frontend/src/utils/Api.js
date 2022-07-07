@@ -1,11 +1,15 @@
 class Api {
-  headers = {
-    authorization: "6554ca45-9ec7-4afa-bc65-05491936dde3",
-    "Content-type": "application/json",
-  };
-
   constructor(options) {
     this.url = options.url;
+  }
+
+  get _headers() {
+    return {
+        authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+    }
   }
 
   _handleResponse = (res) => {
@@ -17,20 +21,20 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this.url}cards`, {
-      headers: this.headers,
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
   getUserInfo() {
     return fetch(`${this.url}users/me`, {
-      headers: this.headers,
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
   setUserInfo(data) {
     return fetch(`${this.url}users/me`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about,
@@ -41,7 +45,7 @@ class Api {
   setAvatar(data) {
     return fetch(`${this.url}users/me/avatar`, {
       method: "PATCH",
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar,
       }),
@@ -51,7 +55,7 @@ class Api {
   createCard(data) {
     return fetch(`${this.url}cards`, {
       method: "POST",
-      headers: this.headers,
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -62,14 +66,14 @@ class Api {
   changeLikeCardStatus(id, like) {
     return fetch(`${this.url}cards/likes/${id}`, {
       method: like ? "PUT" : "DELETE",
-      headers: this.headers,
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 
   deleteCard(id) {
     return fetch(`${this.url}cards/${id}`, {
       method: "DELETE",
-      headers: this.headers,
+      headers: this._headers,
     }).then(this._handleResponse);
   }
 }
