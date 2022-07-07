@@ -1,6 +1,7 @@
 class Authentification {
   constructor(options) {
     this._url = options.url;
+    this._headers = options.headers;
   }
 
   _handleResponse = (res) => {
@@ -13,9 +14,7 @@ class Authentification {
   registration = (email, password) => {
     return fetch(`${this._url}/signup`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({ email, password }),
     }).then(this._handleResponse);
   }
@@ -23,9 +22,7 @@ class Authentification {
   handleLogin = (email, password) => {
     return fetch(`${this._url}/signin`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: this._headers,
       body: JSON.stringify({ email, password }),
     })
       .then(this._handleResponse)
@@ -39,7 +36,7 @@ class Authentification {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        ...this._headers,
         Authorization: `Bearer ${token}`,
       },
     }).then(this._handleResponse);
@@ -47,5 +44,8 @@ class Authentification {
 }
 
 export const auth = new Authentification({
-  url: "https://auth.nomoreparties.co"
+  url: "https://api.mesto.rt.front.nomoredomains.sbs",
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
