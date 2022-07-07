@@ -46,6 +46,7 @@ class Authentification {
 export const auth = new Authentification({
   url: "https://api.mesto.rt.front.nomoredomains.sbs",
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
   }
 });

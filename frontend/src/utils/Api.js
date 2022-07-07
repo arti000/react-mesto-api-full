@@ -3,7 +3,7 @@ class Api {
     this.url = options.url;
   }
 
-  get _headers() {
+  _headers() {
     return {
         authorization: `Bearer ${localStorage.getItem("jwt")}`,
         'Content-Type': 'application/json',
