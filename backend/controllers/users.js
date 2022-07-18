@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const bcrypt = require('bcryptjs'); // импортируем модуль bcrypt
 const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
 const User = require('../models/user'); // импортируем модель пользователя
@@ -20,14 +21,14 @@ const login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      // Записываем токен в куку
-      res
-        .cookie('jwt', token, {
-          maxAge: 3600000 * 24 * 7,
-          sameSite: true,
-          httpOnly: true,
-        })
-        .send({ message: 'Логин успешный' });
+      res.send({ token });
+      // res
+      //   .cookie('jwt', token, {
+      //     maxAge: 3600000 * 24 * 7,
+      //     sameSite: true,
+      //     httpOnly: true,
+      //   })
+      //   .send({ message: 'Логин успешный' });
     })
     .catch((err) => {
       // ошибка аутентификации
