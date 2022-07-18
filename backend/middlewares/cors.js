@@ -5,6 +5,7 @@ const allowedCors = [
   'http://mesto.rt.front.nomoredomains.sbs',
   'https://mesto.rt.front.nomoredomains.sbs',
   'https://localhost:3000',
+  'https://images.unsplash.com/',
 ];
 
 module.exports = ((req, res, next) => {
