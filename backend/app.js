@@ -3,11 +3,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
-const cors = require('cors');
 
 const { createUser, login } = require('./controllers/users');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
+const cors = require('./middlewares/cors');
 const auth = require('./middlewares/auth');
 const userRoutes = require('./routes/users');
 const cardsRoutes = require('./routes/cards');
@@ -22,7 +22,7 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
-app.use(cors());
+app.use(cors);
 
 // Подключаем логгер запросов
 app.use(requestLogger);
