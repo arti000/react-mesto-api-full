@@ -29,14 +29,14 @@ function App() {
     if (loggedIn) {
       api
         .getUserInfo()
-        .then((UserInfo) => {
-          setCurrentUser(UserInfo);
+        .then((res) => {
+          setCurrentUser({name: res.user.name, about: res.user.about, avatar: res.user.avatar, _id: res.user._id});
         })
         .catch((err) => console.log(err));
       api
         .getInitialCards()
         .then((data) => {
-          setCards(data);
+          setCards(data.reverse());
         })
         .catch((err) => console.log(err));
     }
@@ -176,9 +176,7 @@ function App() {
           setLoggedIn(true);
           setUserEmail(userData.data.email);
         })
-        .catch(() => {
-          localStorage.removeItem("jwt");
-        })
+        .catch((err) => console.log(err))
         //А здесь мы выключаем лоадер после успешной загрузки контента
         .finally(() => setUserAuth(false));
     } else {
