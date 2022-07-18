@@ -22,6 +22,7 @@ class Authentification {
   handleLogin = (email, password) => {
     return fetch(`${this._url}/signin`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
     })
@@ -31,6 +32,7 @@ class Authentification {
   checkToken = (token) => {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
+      credentials: 'include',
       headers: {
         ...this._headers,
         Authorization: `Bearer ${token}`,
