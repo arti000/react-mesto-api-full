@@ -14,6 +14,7 @@ class Authentification {
   registration = (email, password) => {
     return fetch(`${this._url}/signup`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
     }).then(this._handleResponse);
@@ -22,6 +23,7 @@ class Authentification {
   handleLogin = (email, password) => {
     return fetch(`${this._url}/signin`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
     })
@@ -35,6 +37,7 @@ class Authentification {
   checkToken = (token) => {
     return fetch(`${this._url}/users/me`, {
       method: "GET",
+      credentials: 'include',
       headers: {
         ...this._headers,
         Authorization: `Bearer ${token}`,
@@ -47,6 +50,5 @@ export const auth = new Authentification({
   url: "https://api.mesto.rt.front.nomoredomains.sbs",
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
   }
 });
