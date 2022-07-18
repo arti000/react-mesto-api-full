@@ -14,6 +14,7 @@ class Authentification {
   registration = (email, password) => {
     return fetch(`${this._url}/signup`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
     }).then(this._handleResponse);
