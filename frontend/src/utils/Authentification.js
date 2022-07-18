@@ -26,10 +26,6 @@ class Authentification {
       body: JSON.stringify({ email, password }),
     })
       .then(this._handleResponse)
-      .then((userData) => {
-        localStorage.setItem("jwt", userData.token)
-        return userData;
-      });
   }
 
   checkToken = (token) => {

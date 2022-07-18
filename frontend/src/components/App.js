@@ -17,6 +17,8 @@ import InfoTooltip from "./InfoTooltip";
 import { auth } from "../utils/Authentification";
 
 function App() {
+  const userToken = localStorage.getItem('jwt');
+
   //Все, что касается пользователя
   const [currentUser, setCurrentUser] = React.useState({ name: "", about: "" });
   const [loggedIn, setLoggedIn] = React.useState(false);
@@ -151,6 +153,11 @@ function App() {
   function handleLogin({ email, password }) {
     auth
       .handleLogin(email, password)
+      .then((userData) => {
+        setLoggedIn(true);
+        localStorage.setItem("jwt", userData.token);
+        return userData;
+      })
       .then((data) => {
         navigate("/");
         setUserEmail(data.email);
@@ -160,7 +167,6 @@ function App() {
 
   //Проверка авторизованности пользователя
   React.useEffect(() => {
-    const userToken = localStorage.getItem("jwt");
     if (userToken) {
       //Здесь мы включаем лоадер
       setUserAuth(true);
