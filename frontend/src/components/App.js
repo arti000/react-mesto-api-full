@@ -29,8 +29,8 @@ function App() {
     if (loggedIn) {
       api
         .getUserInfo()
-        .then((res) => {
-          setCurrentUser({name: res.user.name, about: res.user.about, avatar: res.user.avatar, _id: res.user._id});
+        .then((UserInfo) => {
+          setCurrentUser(UserInfo);
         })
         .catch((err) => console.log(err));
       api
