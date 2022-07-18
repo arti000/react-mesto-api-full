@@ -21,12 +21,14 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this.url}/cards`, {
+      method: 'GET',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   getUserInfo() {
     return fetch(`${this.url}/users/me`, {
+      method: 'GET',
       headers: this._headers,
     }).then(this._handleResponse);
   }
