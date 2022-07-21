@@ -60,16 +60,16 @@ function App() {
     api
     .setUserInfo({ name, about })
       .then((res) => {
-        console.log(res.user);
+        console.log(res);
         setCurrentUser(res);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
     }
     function handleUpdateAvatar({ avatar }) {
-      console.log({avatar})
+      console.log({ avatar })
     api
-    .setAvatar({ avatar })
+    .setAvatar({avatar})
     .then((res) => {
       console.log(res)
         setCurrentUser(res);
@@ -130,7 +130,6 @@ function App() {
     }
     
   function userSignOut() {
-    //localStorage.removeItem("jwt");
     setLoggedIn(false);
     navigate("/signin");
   }
@@ -142,7 +141,6 @@ function App() {
       setLoggedIn(true);
       //Здесь мы включаем лоадер
       setUserAuth(true);
-      //.setItem("jwt", userData.token);
       return userData;
     })
     .then((data) => {
@@ -153,13 +151,13 @@ function App() {
     //А здесь мы выключаем лоадер после успешной загрузки контента
     .finally(() => setUserAuth(false));
   }
-  
+
   React.useEffect(() => {
     if (loggedIn) {
       api
         .getUserInfo()
         .then((res) => {
-          setCurrentUser({name: res.name, about: res.about, avatar: res.avatar, _id: res._id});
+          setCurrentUser(res);
         })
         .catch((err) => console.log(err));
       api
@@ -171,27 +169,6 @@ function App() {
     }
   }, [loggedIn]);
   
-  //Проверка авторизованности пользователя
-  // React.useEffect(() => {
-  //   const userToken = localStorage.getItem('jwt');
-  //   if (userToken) {
-  //     //Здесь мы включаем лоадер
-  //     setUserAuth(true);
-  //     auth
-  //       .checkToken(userToken)
-  //       .then((userData) => {
-  //         navigate("/");
-  //         setLoggedIn(true);
-  //         setUserEmail(userData.email);
-  //       })
-  //       .catch((err) => console.log(err))
-  //       //А здесь мы выключаем лоадер после успешной загрузки контента
-  //       .finally(() => setUserAuth(false));
-  //   } else {
-  //     setUserAuth(false);
-  //   }
-  // }, [navigate]);
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page__content">

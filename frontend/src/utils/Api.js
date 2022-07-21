@@ -6,8 +6,7 @@ class Api {
   _headers() {
     return {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Request-Credentials': true,
     }
   }
 
@@ -44,14 +43,14 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  setAvatar({ avatar }) {
+  setAvatar(data) {
     return fetch(`${this.url}/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: avatar,
-      }),
+        avatar: data.avatar
+    }),
     }).then(this._handleResponse);
   }
 

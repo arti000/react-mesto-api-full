@@ -3,12 +3,11 @@ const bcrypt = require('bcryptjs'); // импортируем модуль bcryp
 const jwt = require('jsonwebtoken'); // импортируем модуль jsonwebtoken
 const User = require('../models/user'); // импортируем модель пользователя
 
+const { NODE_ENV, JWT_SECRET } = process.env;
 const UnauthorizedError = require('../errors/unauthorized-err');
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-request-err');
 const ConflictError = require('../errors/conflict-err');
-
-const { NODE_ENV, JWT_SECRET } = process.env;
 
 // Контроллер для входа пользователя на сайт
 const login = (req, res, next) => {
@@ -102,12 +101,12 @@ const updateProfile = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, {
     new: true,
-    runValidators: true,
+    unValidators: true,
   })
-    .then((user) => res.status(200).send({ user }))
+    .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError(`Переданы некорректные данные при создании пользователя, ${req.user._id}`));
+        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
       }
       next(err);
     });
