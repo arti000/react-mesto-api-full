@@ -18,44 +18,28 @@ import { auth } from "../utils/Authentification";
 
 function App() {
   //Все, что касается пользователя
-  const [currentUser, setCurrentUser] = React.useState({ name: "", about: "" });
+  const [currentUser, setCurrentUser] = React.useState({ name: "", about: "", });
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState("");
   const [userAuth, setUserAuth] = React.useState(false);
 
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (loggedIn) {
-      api
-        .getUserInfo()
-        .then((UserInfo) => {
-          setCurrentUser(UserInfo);
-        })
-        .catch((err) => console.log(err));
-      api
-        .getInitialCards()
-        .then((data) => {
-          setCards(data.reverse());
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
-
+  
   //Все, что касается попапов
   const [selectedCard, setSelectedCard] = React.useState();
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpening] =
     React.useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpening] =
+    const [isAddPlacePopupOpen, setIsAddPlacePopupOpening] =
     React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpening] =
+    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpening] =
     React.useState(false);
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
-  const [userStatus, setUserStatus] = React.useState();
-
-  function handleEditAvatarClick() {
-    setIsEditAvatarPopupOpening(true);
-  }
+    const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
+    const [userStatus, setUserStatus] = React.useState();
+    
+    function handleEditAvatarClick() {
+      setIsEditAvatarPopupOpening(true);
+    }
   function handleEditProfileClick() {
     setIsEditProfilePopupOpening(true);
   }
@@ -74,18 +58,21 @@ function App() {
   //Все что касается частных функций попапов
   function handleUpdateUser({ name, about }) {
     api
-      .setUserInfo({ name, about })
+    .setUserInfo({ name, about })
       .then((res) => {
-        setCurrentUser(res.user);
+        console.log(res.user);
+        setCurrentUser(res);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
-  }
-  function handleUpdateAvatar({ avatar }) {
+    }
+    function handleUpdateAvatar({ avatar }) {
+      console.log({avatar})
     api
-      .setAvatar({ avatar })
-      .then((userAvatar) => {
-        setCurrentUser(userAvatar);
+    .setAvatar({ avatar })
+    .then((res) => {
+      console.log(res)
+        setCurrentUser(res);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -100,7 +87,7 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
-
+  
   //Все, что касается карточек
   const [cards, setCards] = React.useState([]);
   function handleCardLike(card) {
@@ -109,13 +96,13 @@ function App() {
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
+        state.map((c) => (c._id === card._id ? newCard : c))
         );
       })
       .catch((err) => console.log(err));
-  }
-  function handleCardDelete(card) {
-    api
+    }
+    function handleCardDelete(card) {
+      api
       .deleteCard(card._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
@@ -140,49 +127,70 @@ function App() {
       .finally(() => {
         setIsInfoToolTipOpen(true);
       });
-  }
-
+    }
+    
   function userSignOut() {
-    localStorage.removeItem("jwt");
+    //localStorage.removeItem("jwt");
     setLoggedIn(false);
     navigate("/signin");
   }
 
   function handleLogin({ email, password }) {
     auth
-      .handleLogin(email, password)
-      .then((userData) => {
-        setLoggedIn(true);
-        localStorage.setItem("jwt", userData.token);
-        return userData;
-      })
-      .then((data) => {
-        navigate("/");
-        setUserEmail(data.email);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  //Проверка авторизованности пользователя
-  React.useEffect(() => {
-    const userToken = localStorage.getItem('jwt');
-    if (userToken) {
+    .handleLogin(email, password)
+    .then((userData) => {
+      setLoggedIn(true);
       //Здесь мы включаем лоадер
       setUserAuth(true);
-      auth
-        .checkToken(userToken)
-        .then((userData) => {
-          navigate("/");
-          setLoggedIn(true);
-          setUserEmail(userData.data.email);
+      //.setItem("jwt", userData.token);
+      return userData;
+    })
+    .then((data) => {
+      navigate("/");
+      setUserEmail(data.email);
+    })
+    .catch((err) => console.log(err))
+    //А здесь мы выключаем лоадер после успешной загрузки контента
+    .finally(() => setUserAuth(false));
+  }
+  
+  React.useEffect(() => {
+    if (loggedIn) {
+      api
+        .getUserInfo()
+        .then((res) => {
+          setCurrentUser({name: res.name, about: res.about, avatar: res.avatar, _id: res._id});
         })
-        .catch((err) => console.log(err))
-        //А здесь мы выключаем лоадер после успешной загрузки контента
-        .finally(() => setUserAuth(false));
-    } else {
-      setUserAuth(false);
+        .catch((err) => console.log(err));
+      api
+        .getInitialCards()
+        .then((data) => {
+          setCards(data.reverse());
+        })
+        .catch((err) => console.log(err));
     }
-  }, [navigate]);
+  }, [loggedIn]);
+  
+  //Проверка авторизованности пользователя
+  // React.useEffect(() => {
+  //   const userToken = localStorage.getItem('jwt');
+  //   if (userToken) {
+  //     //Здесь мы включаем лоадер
+  //     setUserAuth(true);
+  //     auth
+  //       .checkToken(userToken)
+  //       .then((userData) => {
+  //         navigate("/");
+  //         setLoggedIn(true);
+  //         setUserEmail(userData.email);
+  //       })
+  //       .catch((err) => console.log(err))
+  //       //А здесь мы выключаем лоадер после успешной загрузки контента
+  //       .finally(() => setUserAuth(false));
+  //   } else {
+  //     setUserAuth(false);
+  //   }
+  // }, [navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

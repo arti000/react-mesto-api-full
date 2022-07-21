@@ -27,7 +27,7 @@ const login = (req, res, next) => {
           sameSite: true,
           httpOnly: true,
         })
-        .send({ message: 'Логин успешный' });
+        .send({ token });
     })
     .catch((err) => {
       // ошибка аутентификации
@@ -104,10 +104,10 @@ const updateProfile = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.status(200).send({ user }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        next(new BadRequestError(`Переданы некорректные данные при создании пользователя, ${req.user._id}`));
       }
       next(err);
     });
@@ -116,6 +116,7 @@ const updateProfile = (req, res, next) => {
 // Контроллер обновления аватара пользователем
 const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
+  console.log(avatar);
   User.findByIdAndUpdate(req.user._id, { avatar }, {
     new: true,
     runValidators: true,

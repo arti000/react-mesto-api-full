@@ -30,16 +30,16 @@ class Authentification {
       .then(this._handleResponse)
   }
 
-  checkToken = (token) => {
-    return fetch(`${this._url}/users/me`, {
-      method: "GET",
-      credentials: 'include',
-      headers: {
-        ...this._headers,
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(this._handleResponse);
-  }
+  // checkToken = (token) => {
+  //   return fetch(`${this._url}/users/me`, {
+  //     method: "GET",
+  //     credentials: 'include',
+  //     headers: {
+  //       ...this._headers,
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   }).then(this._handleResponse);
+  // }
 }
 
 export const auth = new Authentification({

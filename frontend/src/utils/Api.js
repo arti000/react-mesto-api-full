@@ -5,7 +5,6 @@ class Api {
 
   _headers() {
     return {
-        authorization: `Bearer ${localStorage.getItem("jwt")}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -16,7 +15,7 @@ class Api {
     if (!res.ok) {
       return Promise.reject(`Ошибка: ${res.status}`);
     }
-    return res.json();
+      return res.json();
   };
 
   getInitialCards() {
@@ -33,25 +32,25 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  setUserInfo(data) {
+  setUserInfo({ name, about }) {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
-        name: data.name,
-        about: data.about,
+        name: name,
+        about: about,
       }),
     }).then(this._handleResponse);
   }
 
-  setAvatar(data) {
+  setAvatar({ avatar }) {
     return fetch(`${this.url}/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: data.avatar,
+        avatar: avatar,
       }),
     }).then(this._handleResponse);
   }
@@ -88,3 +87,5 @@ class Api {
 export const api = new Api({
   url: "https://api.mesto.rt.front.nomoredomains.sbs",
 });
+
+

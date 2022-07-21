@@ -22,6 +22,13 @@ app.use(express.urlencoded({
   extended: true,
 }));
 
+mongoose.connect('mongodb://localhost:27017/mestodb', {
+  useNewUrlParser: true,
+});
+
+// команда для подключения с локальной машины к удаленной базе данных на порт 9912
+// ssh -L 9912:localhost:27017 al-mysri@51.250.14.6
+
 app.use(cors);
 
 // Подключаем логгер запросов
@@ -42,8 +49,8 @@ app.post('/signup', validateUser, createUser);
 app.use(auth);
 
 // роуты, которым нужна авторизация
-app.use('/users', userRoutes);
-app.use('/cards', cardsRoutes);
+app.use('/', userRoutes);
+app.use('/', cardsRoutes);
 app.use('*', (req, res) => {
   throw new NotFoundError('Страница не найдена');
 });
@@ -55,14 +62,6 @@ app.use(errorLogger);
 app.use(errors());
 app.use(ServerError);
 
-async function main() {
-  await mongoose.connect('mongodb://localhost:27017/mestodb', {
-    useNewUrlParser: true,
-  });
-
-  app.listen(PORT, () => {
-    console.log(`Слушаем ${PORT}`);
-  });
-}
-
-main();
+app.listen(PORT, () => {
+  console.log(`Слушаем ${PORT}`);
+});
