@@ -1,13 +1,7 @@
 class Api {
   constructor(options) {
-    this.url = options.url;
-  }
-
-  _headers() {
-    return {
-        'Content-Type': 'application/json',
-        'Access-Control-Request-Credentials': true,
-    }
+    this._url = options.url;
+    this._headers = options.headers;
   }
 
   _handleResponse = (res) => {
@@ -18,21 +12,21 @@ class Api {
   };
 
   getInitialCards() {
-    return fetch(`${this.url}/cards`, {
+    return fetch(`${this._url}/cards`, {
       credentials: 'include',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   getUserInfo() {
-    return fetch(`${this.url}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       credentials: 'include',
       headers: this._headers,
     }).then(this._handleResponse);
   }
 
   setUserInfo = ( name, about ) => {
-    return fetch(`${this.url}/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
@@ -41,7 +35,7 @@ class Api {
   }
 
   setAvatar = (avatar) => {
-    return fetch(`${this.url}/users/me/avatar`, {
+    return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
@@ -51,7 +45,7 @@ class Api {
 
   createCard = ({name, link}) => {
     console.log(name, link)
-    return fetch(`${this.url}/cards`, {
+    return fetch(`${this._url}/cards`, {
       method: "POST",
       credentials: 'include',
       headers: this._headers,
@@ -60,7 +54,7 @@ class Api {
   }
 
   changeLikeCardStatus(id, like) {
-    return fetch(`${this.url}/cards/${id}/likes/`, {
+    return fetch(`${this._url}/cards/${id}/likes/`, {
       method: like ? "PUT" : "DELETE",
       credentials: 'include',
       headers: this._headers,
@@ -68,7 +62,7 @@ class Api {
   }
 
   deleteCard(id) {
-    return fetch(`${this.url}/cards/${id}`, {
+    return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       credentials: 'include',
       headers: this._headers,
@@ -78,6 +72,10 @@ class Api {
 
 export const api = new Api({
   url: "https://api.mesto.rt.front.nomoredomains.sbs",
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Request-Credentials': true,
+  }
 });
 
 
