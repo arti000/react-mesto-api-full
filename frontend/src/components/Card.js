@@ -12,7 +12,7 @@ function Card(props) {
     props.onCardLike(props.card);
   }
   const currentUser = React.useContext(CurrentUserContext);
-  const isOwn = props.card.owner._id === currentUser._id;
+  const isOwn = props.card.owner === currentUser._id;
   const cardRemoveButtonClassName = `card__remove-button ${
     isOwn ? "card__remove-button_visible" : ""
   }`;
