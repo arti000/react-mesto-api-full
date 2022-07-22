@@ -1,8 +1,14 @@
+// ----------------------------------------------------------------------------
+//       Данный класс предназначен для осуществления запросов к серверу
+// ----------------------------------------------------------------------------
+
 class Authentification {
   constructor(options) {
     this._url = options.url;
     this._headers = options.headers;
   }
+
+// =========================== Обработчик ошибки ==============================
 
   _handleResponse = (res) => {
     if (!res.ok) {
@@ -10,6 +16,8 @@ class Authentification {
     }
     return res.json();
   };
+
+// ========================== Регистрация пользователя ========================
 
   registration = (email, password) => {
     return fetch(`${this._url}/signup`, {
@@ -19,6 +27,8 @@ class Authentification {
       body: JSON.stringify({ email, password }),
     }).then(this._handleResponse);
   }
+
+// ========================== Авторизация пользователя ========================
 
   handleLogin = (email, password) => {
     return fetch(`${this._url}/signin`, {
