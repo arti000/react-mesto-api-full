@@ -56,23 +56,23 @@ function App() {
   }
 
   //Все что касается частных функций попапов
-  function handleUpdateUser({ name, about }) {
+  function handleUpdateUser( name, about ) {
     api
-    .setUserInfo({ name, about })
+    .setUserInfo( name, about )
       .then((res) => {
         console.log(res);
-        setCurrentUser(res);
+        setCurrentUser({ ...currentUser, name: res.name, about: res.about});
         closeAllPopups();
       })
       .catch((err) => console.log(err));
     }
-    function handleUpdateAvatar({ avatar }) {
-      console.log({ avatar })
+    function handleUpdateAvatar(avatar) {
+      console.log(avatar)
     api
-    .setAvatar({avatar})
+    .setAvatar(avatar)
     .then((res) => {
       console.log(res)
-        setCurrentUser(res);
+        setCurrentUser({ ...currentUser, avatar: res.avatar});
         closeAllPopups();
       })
       .catch((err) => console.log(err));

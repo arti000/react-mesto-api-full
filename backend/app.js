@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 
 const { createUser, login } = require('./controllers/users');
@@ -31,6 +32,9 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 
 app.use(cors);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Подключаем логгер запросов
 app.use(requestLogger);
 
@@ -49,8 +53,8 @@ app.post('/signup', validateUser, createUser);
 app.use(auth);
 
 // роуты, которым нужна авторизация
-app.use('/', userRoutes);
-app.use('/', cardsRoutes);
+app.use('/users', bodyParser.json(), userRoutes);
+app.use('/cards', bodyParser.urlencoded({ extended: true }), cardsRoutes);
 app.use('*', (req, res) => {
   throw new NotFoundError('Страница не найдена');
 });

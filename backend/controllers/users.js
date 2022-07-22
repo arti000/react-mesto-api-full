@@ -101,7 +101,7 @@ const updateProfile = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, {
     new: true,
-    unValidators: true,
+    runValidators: true,
   })
     .then((data) => res.status(200).send(data))
     .catch((err) => {

@@ -26,8 +26,7 @@ class Authentification {
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({ email, password }),
-    })
-      .then(this._handleResponse)
+    }).then(this._handleResponse)
   }
 }
 

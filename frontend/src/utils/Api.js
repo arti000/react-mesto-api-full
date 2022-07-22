@@ -31,38 +31,31 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  setUserInfo({ name, about }) {
+  setUserInfo = ( name, about ) => {
     return fetch(`${this.url}/users/me`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        about: about,
-      }),
+      body: JSON.stringify( name, about ),
     }).then(this._handleResponse);
   }
 
-  setAvatar(data) {
+  setAvatar = (avatar) => {
     return fetch(`${this.url}/users/me/avatar`, {
       method: "PATCH",
       credentials: 'include',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar
-    }),
+      body: JSON.stringify(avatar),
     }).then(this._handleResponse);
   }
 
-  createCard(data) {
+  createCard = ({name, link}) => {
+    console.log(name, link)
     return fetch(`${this.url}/cards`, {
       method: "POST",
       credentials: 'include',
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link,
-      }),
+      body: JSON.stringify({ name: name, link: link }),
     }).then(this._handleResponse);
   }
 
