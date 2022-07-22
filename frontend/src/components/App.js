@@ -141,11 +141,11 @@ function App() {
       setLoggedIn(true);
       //Здесь мы включаем лоадер
       setUserAuth(true);
+      console.log(userData)
       return userData;
     })
     .then((data) => {
       navigate("/");
-      setUserEmail(data.email);
     })
     .catch((err) => console.log(err))
     //А здесь мы выключаем лоадер после успешной загрузки контента
@@ -158,6 +158,7 @@ function App() {
         .getUserInfo()
         .then((res) => {
           setCurrentUser(res);
+          setUserEmail(res.email);
         })
         .catch((err) => console.log(err));
       api

@@ -26,7 +26,7 @@ const login = (req, res, next) => {
           sameSite: true,
           httpOnly: true,
         })
-        .send({ token });
+        .send({ message: 'Авторизация прошла успешно' });
     })
     .catch((err) => {
       // ошибка аутентификации
