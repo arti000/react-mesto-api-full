@@ -53,8 +53,8 @@ app.post('/signup', validateUser, createUser);
 app.use(auth);
 
 // роуты, которым нужна авторизация
-app.use('/users', bodyParser.json(), userRoutes);
-app.use('/cards', bodyParser.urlencoded({ extended: true }), cardsRoutes);
+app.use('/users', userRoutes);
+app.use('/cards', cardsRoutes);
 app.use('*', (req, res) => {
   throw new NotFoundError('Страница не найдена');
 });
